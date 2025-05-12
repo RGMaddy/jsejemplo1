@@ -3,13 +3,22 @@ function validar(){
     let eNombre = document.getElementById("nombre")
     let vNombre = eNombre.value
     let eErrorNombre = document.getElementById("error nombre")
-
     let eApellido = document.getElementById("apellido")
     let vApellido = eNombre.value
     let eErrorApellido = document.getElementById("error apellido")
-
-    validarLargoMinimo(eNombre,vNombre,eErrorNombre)
-    validarLargoMinimo(eApellido,vApellido,eErrorApellido)
+    let fNombre= validarLargoMinimo(eNombre,vNombre,eErrorNombre)
+    let fApellido= validarLargoMinimo(eApellido,vApellido,eErrorApellido)
+    if(fNombre == "exito" && fApellido == "exito"){
+        let p = {
+            nombre:vNombre,
+            apellido:vApellido
+        }
+        personas.push(p)
+        console.log(personas)
+        eNombre.value= ""
+        eApellido.value= ""
+        cargarDatos()
+    }
 
 }
 function validarLargoMinimo(elemento,valor,eError){
@@ -24,9 +33,20 @@ function validarLargoMinimo(elemento,valor,eError){
         console.log("todo bien")
         eErrorNombre.innerText=""
         eNombre.style.backgroundColor="green"
+        return "exito"
     }
 }
+function cargarDatos(){
+    console.log("cargando...")
+    let mapPersonas = personas.map((p, index)=>{
+        return"<tr><td>"+p.nombre+
+        "</td><td>"+p.apellido+
+        "</td><td><button type='button' value'"+index+"'>Eliminar</button></td></tr>"
+    })
 
-function validarLargoMinimo(valor){
-
+    let tablaPersonas = document.getElementById("tablaPersonas")
+    let strTablaPersonas = mapPersonas.join("")
+    tablaPersonas.innerHTML =""
+    console.log(mapPersonas)
 }
+
